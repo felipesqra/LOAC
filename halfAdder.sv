@@ -1,14 +1,15 @@
 // Felipe de Souza Siqueira
-// circuito meio somador
-
+// Circuito meio somador
+// 119110399
 
 module halfAdder(
   input logic a, b,
   output logic sum, carry
 );
 
-  always_comb sum <= a ^ b;
-
-  always_comb carry <= a & b;
+  always_comb begin
+    sum <= a ^ b;
+    carry <= a & b;
+  end
     
 endmodule
