@@ -1,3 +1,7 @@
+// Felipe de Souza Siqueira
+// circuito meio somador
+
+
 module halfAdder(
   input logic a, b,
   output logic sum, carry
