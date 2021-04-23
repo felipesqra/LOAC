@@ -35,9 +35,9 @@ module top(input  logic clk_2,
       * sirene (tocar alarme) - LED[2].
   */
   
-  // entradas
-
   logic noite, paradas, sexta, producao, sirene;
+
+  // entradas
 
   always_comb begin
     noite <= SWI[4];
@@ -49,11 +49,10 @@ module top(input  logic clk_2,
 
     sirene <= (noite & paradas) | (sexta & producao & paradas);
 
-
   // saída
 
-
     LED[2] <= sirene;
+    
   end
 
 endmodule
