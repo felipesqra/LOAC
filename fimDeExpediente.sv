@@ -1,5 +1,6 @@
 // Felipe de Souza Siqueira
 // Fim de Expediente, questão 1 da lista: http://lad.ufcg.edu.br/loac/index.php?n=OAC.Comb
+// 119110399
 
 parameter NINSTR_BITS = 32;
 parameter NBITS_TOP = 8, NREGS_TOP = 32, NBITS_LCD = 64;
@@ -13,7 +14,8 @@ module top(input  logic clk_2,
            output logic [NBITS_TOP-1:0] lcd_registrador [0:NREGS_TOP-1],
            output logic [NBITS_TOP-1:0] lcd_pc, lcd_SrcA, lcd_SrcB,
            lcd_ALUResult, lcd_Result, lcd_WriteData, lcd_ReadData, 
-           output logic lcd_MemWrite, lcd_Branch, lcd_MemtoReg, lcd_RegWrite);
+           output logic lcd_MemWrite, lcd_Branch, lcd_MemtoReg, lcd_RegWrite
+          );
 
   /*
     Especificação:
@@ -35,26 +37,22 @@ module top(input  logic clk_2,
   
   // entradas
 
-  logic noite, paradas, sexta, producao;
+  logic noite, paradas, sexta, producao, sirene;
 
   always_comb begin
     noite <= SWI[4];
     paradas <= SWI[5];
     sexta <= SWI[6];
     producao <= SWI[7];
-  end
 
   // lógica 
 
-  logic sirene;
-
-  always_comb begin
     sirene <= (noite & paradas) | (sexta & producao & paradas);
-  end
+
 
   // saída
 
-  always_comb begin
+
     LED[2] <= sirene;
   end
 
