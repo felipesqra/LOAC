@@ -28,29 +28,29 @@ sensores de tranca das respectivas portas. A luz de sinalização que informa se
 A luz de sinalização que informa se tem algum lavatório livre para homens é o LED[1].
 
 ---- Anotação pessoal: 1 para porta trancada e 0 para porta destrancada. São 3 portas no total e portanto, 3 switches.
----- Anotação pessoal: LED[0] é o banheiro das mulheres, LED[1] dos homens, LED[2] não é especificado.
-
+---- Anotação pessoal: LED[0] é o banheiro das mulheres.
+---- Anotação Pessoal: O que interpretei é que o terceiro e o segundo banheiro podem ser usados por ambos, portanto caso
+ele esteja disponíveis, as luzes de ambos os leds devem permanecer apagadas, pois existe pelo menos um banheiro que pode ser utilizado.
 */
 
-logic banheiroFeminino, banheiroMasculino, banheiroAmbos, ledFeminino, ledMasculino, ledAmbos;
+logic banheiroFeminino, banheiroAmbos1, banheiroAmbos2, ledFeminino, ledMasculino;
 
 always_comb begin
   banheiroFeminino <= SWI[0];
-  banheiroMasculino <= SWI[1];
-  banheiroAmbos <= SWI[2];
+  banheiroAmbos1 <= SWI[1];
+  banheiroAmbos2 <= SWI[2];
 
   // lógica
 
-  ledFeminino <= banheiroFeminino;
-  ledMasculino <= banheiroMasculino;
-  ledAmbos <= banheiroAmbos;
+  ledFeminino <= ~(banheiroFeminino & banheiroAmbos1 & banheiroAmbos2);
+  ledMasculino <= ~(banheiroAmbos1 & banheiroAmbos2);
 
   // Saída
 
   LED[0] <= ledFeminino;
   LED[1] <= ledMasculino;
-  LED[2] <= ledAmbos;
-
 
 end
+
+endmodule 
 
