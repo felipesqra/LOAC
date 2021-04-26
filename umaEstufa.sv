@@ -39,14 +39,14 @@ tempo um LED deve acender.
   logic T1, T2, aquecedor, resfriador, inconsistencia; // Definindo variáveis que serão utilizadas
 
   always_comb begin
-    T1 <= SWI[3]
-    T2 <= SWI[4]
+    T1 <= SWI[3];
+    T2 <= SWI[4];
 
     //lógica
 
     aquecedor <= ~T1 & ~T2;
     resfriador <= T1 & T2;
-    inconsistencia <= ~T1 & ~T2;
+    inconsistencia <= ~T1 & T2;
 
     //saída
 
