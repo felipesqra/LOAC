@@ -14,8 +14,7 @@ module top(input  logic clk_2,
            output logic [NBITS_TOP-1:0] lcd_registrador [0:NREGS_TOP-1],
            output logic [NBITS_TOP-1:0] lcd_pc, lcd_SrcA, lcd_SrcB,
            lcd_ALUResult, lcd_Result, lcd_WriteData, lcd_ReadData, 
-           output logic lcd_MemWrite, lcd_Branch, lcd_MemtoReg, lcd_RegWrite
-          );
+           output logic lcd_MemWrite, lcd_Branch, lcd_MemtoReg, lcd_RegWrite);
 
 /*
 
@@ -41,6 +40,7 @@ Saída: SEG
 variar de 1 a 9, necessitando assim de 4 bits para formar todas as possibilidades
 */
 logic bit0, bit1, bit2, bit3, opcao;
+logic seguimento0, seguimento1, seguimento2, seguimento3, seguimento4, seguimento5, seguimento6;
 
 always_comb begin
   // Definindo variáveis
@@ -49,14 +49,15 @@ always_comb begin
   bit2 <= SWI[2];
   bit3 <= SWI[3];
   opcao <= SWI[7];
+end
 
-  logic seguimento0, seguimento1, seguimento2, seguimento3, seguimento4, seguimento5, seguimento6;
+always @(*) begin
 
   if (opcao) begin
     // Usuário deseja mostrar situação do aluno
     seguimento0 <= 1;
-    seguimento1 <= ~(~bit_quatro & bit_tres & ~(bit_dois & bit_um));
-    seguimento2 <= (bit_quatro | (bit_um & bit_dois & bit_tres));
+    seguimento1 <= ~(~bit3 & bit2 & ~(bit1 & bit0));
+    seguimento2 <= (bit3 | (bit0 & bit1 & bit2));
     // Anotação pessoal: O seguimento 3 deve estar sempre desligado
     seguimento3 <= 0;
     seguimento4 <= 1;
@@ -67,117 +68,136 @@ always_comb begin
   else begin
     // O usuário deseja mostrar a nota do aluno
 
-    if (~bit_quatro & ~bit_tres & ~bit_dois & ~bit_um) begin
+    if (~bit3 & ~bit2 & ~bit1 & ~bit0) begin
       // zero
-      zero <= 1;
-      um <= 1;
-      dois <= 1;
-      tres <= 1;
-      quatro <= 1;
-      cinco <= 1;
-      seis <= 0;
+
+      seguimento0 <= 1;
+      seguimento1 <= 1;
+      seguimento2 <= 1;
+      seguimento3 <= 1;
+      seguimento4 <= 1;
+      seguimento5 <= 1;
+      seguimento6 <= 0;
     end
 
-    if (~bit_quatro & ~bit_tres & ~bit_dois & bit_um) begin
+    if (~bit3 & ~bit2 & ~bit1 & bit0) begin
       // um
-      zero <= 0;
-      um <= 1;
-      dois <= 1;
-      tres <= 0;
-      quatro <= 0;
-      cinco <= 0;
-      seis <= 0;
+
+      seguimento0 <= 0;
+      seguimento1 <= 1;
+      seguimento2 <= 1;
+      seguimento3 <= 0;
+      seguimento4 <= 0;
+      seguimento5 <= 0;
+      seguimento6 <= 0;
+
     end
 
-    if (~bit_quatro & ~bit_tres & bit_dois & ~bit_um) begin
+    if (~bit3 & ~bit2 & bit1 & ~bit0) begin
       // dois
-      zero <= 1;
-      um <= 1;
-      dois <= 0;
-      tres <= 1;
-      quatro <= 1;
-      cinco <= 0;
-      seis <= 1;
+
+      seguimento0 <= 1;
+      seguimento1 <= 1;
+      seguimento2 <= 0;
+      seguimento3 <= 1;
+      seguimento4 <= 1;
+      seguimento5 <= 0;
+      seguimento6 <= 1;
+
     end
 
-    if (~bit_quatro & ~bit_tres & bit_dois & bit_um) begin
+    if (~bit3 & ~bit2 & bit1 & bit0) begin
       // tres
-      zero <= 1;
-      um <= 1;
-      dois <= 1;
-      tres <= 1;
-      quatro <= 0;
-      cinco <= 0;
-      seis <= 1;
+
+      seguimento0 <= 1;
+      seguimento1 <= 1;
+      seguimento2 <= 1;
+      seguimento3 <= 1;
+      seguimento4 <= 0;
+      seguimento5 <= 0;
+      seguimento6 <= 1;
+
     end
 
-    if (~bit_quatro & bit_tres & ~bit_dois & ~bit_um) begin
+    if (~bit3 & bit2 & ~bit1 & ~bit0) begin
       // quatro
-      zero <= 0;
-      um <= 1;
-      dois <= 1;
-      tres <= 0;
-      quatro <= 0;
-      cinco <= 1;
-      seis <= 1;
+
+      seguimento0 <= 0;
+      seguimento1 <= 1;
+      seguimento2 <= 1;
+      seguimento3 <= 0;
+      seguimento4 <= 0;
+      seguimento5 <= 1;
+      seguimento6 <= 1;
+
     end
 
-    if (~bit_quatro & bit_tres & ~bit_dois & bit_um) begin
+    if (~bit3 & bit2 & ~bit1 & bit0) begin
       // cinco
-      zero <= 1;
-      um <= 0;
-      dois <= 1;
-      tres <= 1;
-      quatro <= 0;
-      cinco <= 1;
-      seis <= 1;
+
+      seguimento0 <= 1;
+      seguimento1 <= 0;
+      seguimento2 <= 1;
+      seguimento3 <= 1;
+      seguimento4 <= 0;
+      seguimento5 <= 1;
+      seguimento6 <= 1;
+
     end
 
-    if (~bit_quatro & bit_tres & bit_dois & ~bit_um) begin
+    if (~bit1 & bit2 & bit1 & ~bit0) begin
       // seis
-      zero <= 1;
-      um <= 0;
-      dois <= 1;
-      tres <= 1;
-      quatro <= 1;
-      cinco <= 1;
-      seis <= 1;
+
+      seguimento0 <= 1;
+      seguimento1 <= 0;
+      seguimento2 <= 1;
+      seguimento3 <= 1;
+      seguimento4 <= 1;
+      seguimento5 <= 1;
+      seguimento6 <= 1;
+
     end
 
-    if (~bit_quatro & bit_tres & bit_dois & bit_um) begin
+    if (~bit3 & bit2 & bit1 & bit0) begin
       // sete
-      zero <= 1;
-      um <= 1;
-      dois <= 1;
-      tres <= 0;
-      quatro <= 0;
-      cinco <= 0;
-      seis <= 0;
+
+      seguimento0 <= 1;
+      seguimento1 <= 1;
+      seguimento2 <= 1;
+      seguimento3 <= 0;
+      seguimento4 <= 0;
+      seguimento5 <= 0;
+      seguimento6 <= 0;
+
     end
 
-    if (bit_quatro & ~bit_tres & ~bit_dois & ~bit_um) begin
+    if (bit3 & ~bit2 & ~bit1 & ~bit0) begin
       // oito
-      zero <= 1;
-      um <= 1;
-      dois <= 1;
-      tres <= 1;
-      quatro <= 1;
-      cinco <= 1;
-      seis <= 1;
+
+      seguimento0 <= 1;
+      seguimento1 <= 1;
+      seguimento2 <= 1;
+      seguimento3 <= 1;
+      seguimento4 <= 1;
+      seguimento5 <= 1;
+      seguimento6 <= 1;
+
     end
 
-    if (bit_quatro & ~bit_tres & ~bit_dois & bit_um) begin
+    if (bit3 & ~bit2 & ~bit1 & bit0) begin
       // nove
-      zero <= 1;
-      um <= 1;
-      dois <= 1;
-      tres <= 0;
-      quatro <= 0;
-      cinco <= 1;
-      seis <= 1;
+
+      seguimento0 <= 1;
+      seguimento1 <= 1;
+      seguimento2 <= 1;
+      seguimento3 <= 0;
+      seguimento4 <= 0;
+      seguimento5 <= 1;
+      seguimento6 <= 1;
+
     end
   end
-end
+
 
 // Saída
 
@@ -188,6 +208,6 @@ SEG[3] <= seguimento3;
 SEG[4] <= seguimento4;
 SEG[5] <= seguimento5;
 SEG[6] <= seguimento6;
-
+end
 endmodule
 
