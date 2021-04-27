@@ -36,10 +36,14 @@ Saída: SEG
 
 */
 
+/* 
+  Anotação pessoal: O usuário irá informar a nota do aluno em binários, que pode
+variar de 1 a 9, necessitando assim de 4 bits para formar todas as possibilidades
+*/
 logic bit0, bit1, bit2, bit3, opcao;
 
 always_comb begin
-  
+  // Definindo variáveis
   bit0 <= SWI[0];
   bit1 <= SWI[1];
   bit2 <= SWI[2];
