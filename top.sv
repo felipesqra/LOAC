@@ -55,8 +55,8 @@ always_comb begin
   if (opcao) begin
     // Usuário deseja mostrar situação do aluno
     seguimento0 <= 1;
-    seguimento1 <= ~(~bit3 & bit2 & ~(bit1 & bit0));
-    seguimento2 <= (bit3 | (bit0 & bit1 & bit2));
+    seguimento1 <= ~(~bit_quatro & bit_tres & ~(bit_dois & bit_um));
+    seguimento2 <= (bit_quatro | (bit_um & bit_dois & bit_tres));
     // Anotação pessoal: O seguimento 3 deve estar sempre desligado
     seguimento3 <= 0;
     seguimento4 <= 1;
@@ -67,15 +67,15 @@ always_comb begin
   else begin
     // O usuário deseja mostrar a nota do aluno
 
-    if (~bit3 & ~bit2 & ~bit1 & ~bit0) begin
+    if (~bit_quatro & ~bit_tres & ~bit_dois & ~bit_um) begin
       // zero
-      seguimento0 <= 1;
-      seguimento1 <= 1;
-      seguimento2 <= 1;
-      seguimento3 <= 1;
-      seguimento4 <= 1;
-      seguimento5 <= 1;
-      seguimento6 <= 0;
+      zero <= 1;
+      um <= 1;
+      dois <= 1;
+      tres <= 1;
+      quatro <= 1;
+      cinco <= 1;
+      seis <= 0;
     end
 
     if (~bit_quatro & ~bit_tres & ~bit_dois & bit_um) begin
