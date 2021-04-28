@@ -21,6 +21,7 @@ Especificação:
   Implemente um circuito que represente um valor inteiro de tamanho 3 
   bits (SWI[2:0]) em base decimal no display de sete segmentos. 
   No lugar do sinal "-" use o ponto (SEG[7]). 
+
 */
 
   logic bit0, bit1, bit2, sinal, seguimento0, seguimento1, seguimento2, seguimento3, seguimento4, seguimento5, seguimento6;
@@ -32,7 +33,6 @@ Especificação:
     bit0 <= SWI[0];
     bit1 <= SWI[1];
     bit2 <= SWI[2];
-
   end
 
   always @(*) begin
