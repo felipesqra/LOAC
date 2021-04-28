@@ -1,3 +1,6 @@
+- USEM POUCOS COMENTÁRIOS NOS PROGRAMAS PQ EU COLOQUEI MUITOS E O PROFESSOR ME DE MISEROS 3 PONTOS POR UM PROGRAMA GIGANTE
+
+
 - SWI significa switch, quando defino por exemplo:
   
   ```systemverilog
