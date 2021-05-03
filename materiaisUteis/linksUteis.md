@@ -5,3 +5,6 @@ Acesso remoto ao laboratório com placas fpga: https://github.com/Icaro-Lima/Lab
 
 
 Visualizar centavos de forma gráfica e fácil: https://loac-cents-view.herokuapp.com/
+
+
+Tipos de dado no system verilog: https://verilogguide.readthedocs.io/en/latest/verilog/datatype.html
