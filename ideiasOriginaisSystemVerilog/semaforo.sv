@@ -22,70 +22,43 @@ Especificação:
   P - Pare SWI[0]
   A - Atenção SWI[1]
   S - Siga SWI[2]
-
   O circuito demonstra ainda que há uma inconsistência nas informações caso mais de uma
   informação seja acionada ao mesmo tempo.
-
   SEG[7] - Inconsistência
 */
 
-  logic pare, atencao, siga, inconsistencia, seguimento0, seguimento1, seguimento2, seguimento3, seguimento4, seguimento5, seguimento6;
+  logic pare, atencao, siga;
 
-  parameter ALTA_TENSAO=1, BAIXA_TENSAO=0;
+
+  parameter ALTA_TENSAO=1, BAIXA_TENSAO=0, ATIVO=0;
   // Entradas
   always_comb begin
     pare <= SWI[0];
     atencao <= SWI[1];
     siga <= SWI[2];
-  end
 
-  // Lógica
-  always @(*) begin
 
     if (pare & (atencao | siga) | atencao & (pare | siga))
-      inconsistencia <= ALTA_TENSAO;
-    else
-      inconsistencia <= BAIXA_TENSAO;
+      SEG[7:0]  <= 8'b11111111;
+  
+    else if(pare) begin
+      //PARE
+      SEG[7:0] <= 8'b01110011; 
+    end
+
+    else if(atencao) begin
+      // ATENÇÃO
+      SEG[7:0] <= 8'b01110111; 
+    end
     
-    if (pare) begin
-      seguimento0 <= ALTA_TENSAO;
-      seguimento1 <= ALTA_TENSAO;
-      seguimento2 <= BAIXA_TENSAO;
-      seguimento3 <= BAIXA_TENSAO;
-      seguimento4 <= ALTA_TENSAO;
-      seguimento5 <= ALTA_TENSAO;
-      seguimento6 <= ALTA_TENSAO;
+    else if(siga) begin
+      // SIGA
+      SEG[7:0]  <= 8'b01101101;
     end
 
-    else if (atencao) begin
-      seguimento0 <= ALTA_TENSAO;
-      seguimento1 <= ALTA_TENSAO;
-      seguimento2 <= ALTA_TENSAO;
-      seguimento3 <= BAIXA_TENSAO;
-      seguimento4 <= ALTA_TENSAO;
-      seguimento5 <= ALTA_TENSAO;
-      seguimento6 <= ALTA_TENSAO;
+    else begin
+      SEG[7:0]  <= 8'b00000000;
     end
 
-    else if (siga) begin
-      seguimento0 <= ALTA_TENSAO;
-      seguimento1 <= BAIXA_TENSAO;
-      seguimento2 <= ALTA_TENSAO;
-      seguimento3 <= ALTA_TENSAO;
-      seguimento4 <= BAIXA_TENSAO;
-      seguimento5 <= ALTA_TENSAO;
-      seguimento6 <= ALTA_TENSAO;
-    end
-
-  // Saídas
-  SEG[0] <= seguimento0;
-  SEG[1] <= seguimento1;
-  SEG[2] <= seguimento2;
-  SEG[3] <= seguimento3;
-  SEG[4] <= seguimento4;
-  SEG[5] <= seguimento5;
-  SEG[6] <= seguimento6;
-
-  SEG[7] <= inconsistencia;
   end
 endmodule

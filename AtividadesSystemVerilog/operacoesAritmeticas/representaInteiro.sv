@@ -1,5 +1,5 @@
 //Felipe de Souza Siqueira
-//Representa inteiro, primeiro exercício disponível no link: https://lad.dsc.ufcg.edu.br/loac/index.php?n=OAC.Soma
+//Representação de um inteiro, primeiro exercício disponível no link: https://lad.dsc.ufcg.edu.br/loac/index.php?n=OAC.Soma
 //119110399
 
 parameter NINSTR_BITS = 32;
@@ -24,107 +24,28 @@ Especificação:
 
 */
 
-  logic bit0, bit1, bit2, sinal, seguimento0, seguimento1, seguimento2, seguimento3, seguimento4, seguimento5, seguimento6;
+  logic [3:0] bits;
 
-  parameter ALTA_TENSAO=1, BAIXA_TENSAO=0;
-  
-  //Entradas
   always_comb begin
-    bit0 <= SWI[0];
-    bit1 <= SWI[1];
-    bit2 <= SWI[2];
-  end
-
-  always @(*) begin
-
-    if (~bit2 & ~bit1 & ~bit0) begin
-      seguimento0 <= ALTA_TENSAO;
-      seguimento1 <= ALTA_TENSAO;
-      seguimento2 <= ALTA_TENSAO;
-      seguimento3 <= ALTA_TENSAO;
-      seguimento4 <= ALTA_TENSAO;
-      seguimento5 <= ALTA_TENSAO;
-      seguimento6 <= BAIXA_TENSAO;
-    end
-
-    if (~bit2 & ~bit1 & bit0) begin
-      seguimento0 <= BAIXA_TENSAO;
-      seguimento1 <= ALTA_TENSAO;
-      seguimento2 <= ALTA_TENSAO;
-      seguimento3 <= BAIXA_TENSAO;
-      seguimento4 <= BAIXA_TENSAO;
-      seguimento5 <= BAIXA_TENSAO;
-      seguimento6 <= BAIXA_TENSAO;
-    end
-
-    if (~bit2 & bit1 & ~bit0) begin
-      seguimento0 <= ALTA_TENSAO;
-      seguimento1 <= ALTA_TENSAO;
-      seguimento2 <= BAIXA_TENSAO;
-      seguimento3 <= ALTA_TENSAO;
-      seguimento4 <= ALTA_TENSAO;
-      seguimento5 <= BAIXA_TENSAO;
-      seguimento6 <= ALTA_TENSAO;
-    end
-
-    if (~bit2 & bit1 & bit0) begin
-      seguimento0 <= ALTA_TENSAO;
-      seguimento1 <= ALTA_TENSAO;
-      seguimento2 <= ALTA_TENSAO;
-      seguimento3 <= ALTA_TENSAO;
-      seguimento4 <= BAIXA_TENSAO;
-      seguimento5 <= BAIXA_TENSAO;
-      seguimento6 <= ALTA_TENSAO;
-    end
-
-    if (bit2 & ~bit1 & ~bit0) begin
-      seguimento0 <= BAIXA_TENSAO;
-      seguimento1 <= ALTA_TENSAO;
-      seguimento2 <= ALTA_TENSAO;
-      seguimento3 <= BAIXA_TENSAO;
-      seguimento4 <= BAIXA_TENSAO;
-      seguimento5 <= ALTA_TENSAO;
-      seguimento6 <= ALTA_TENSAO;
-    end
-
-    if (bit2 & ~bit1 & bit0) begin
-      seguimento0 <= ALTA_TENSAO;
-      seguimento1 <= BAIXA_TENSAO;
-      seguimento2 <= ALTA_TENSAO;
-      seguimento3 <= ALTA_TENSAO;
-      seguimento4 <= BAIXA_TENSAO;
-      seguimento5 <= ALTA_TENSAO;
-      seguimento6 <= ALTA_TENSAO;
-    end
-
-    if (bit2 & bit1 & ~bit0) begin
-      seguimento0 <= ALTA_TENSAO;
-      seguimento1 <= BAIXA_TENSAO;
-      seguimento2 <= ALTA_TENSAO;
-      seguimento3 <= ALTA_TENSAO;
-      seguimento4 <= ALTA_TENSAO;
-      seguimento5 <= ALTA_TENSAO;
-      seguimento6 <= ALTA_TENSAO;
-    end
-
-    if (bit2 & bit1 & bit0) begin
-      seguimento0 <= ALTA_TENSAO;
-      seguimento1 <= ALTA_TENSAO;
-      seguimento2 <= ALTA_TENSAO;
-      seguimento3 <= BAIXA_TENSAO;
-      seguimento4 <= BAIXA_TENSAO;
-      seguimento5 <= BAIXA_TENSAO;
-      seguimento6 <= BAIXA_TENSAO;
-    end
-
-  SEG[0] <= seguimento0;
-  SEG[1] <= seguimento1;
-  SEG[2] <= seguimento2;
-  SEG[3] <= seguimento3;
-  SEG[4] <= seguimento4;
-  SEG[5] <= seguimento5;
-  SEG[6] <= seguimento6;
-
-  SEG[7] <= SWI[7];
+  bits <= SWI[2:0];
+  
+    case (bits)
+      // 0
+      0:SEG[7:0] <= 8'b00111111;
+      // 1
+      1:SEG[7:0] <= 8'b00000110;
+      // 2
+      2:SEG[7:0] <= 8'b01011011;
+      // 3
+      3:SEG[7:0] <= 8'b01001111;
+      // 4
+      4:SEG[7:0] <= 8'b01100110;
+      // 5
+      5:SEG[7:0]  <= 8'b01101101;
+      // 6
+      6:SEG[7:0]  <= 8'b00111101;
+      // 7
+      7:SEG[7:0]  <= 8'b00000111;
+    endcase
   end
 endmodule
